@@ -1,0 +1,60 @@
+
+<wicket:panel>
+	<div style="padding-left: 200px">
+		<label wicket:id="label" id="label"></label>
+
+
+	</div>
+	<div style="padding-left: 40px">
+
+		<form wicket:id="form" style="padding-top: 30px">
+			<input type="text" wicket:id="inputPlayer" /> <input type="submit"
+				wicket:id="startGame" value="Play Game" />
+		</form>
+
+	</div>
+
+
+	<!-- 	<p>
+		Output:
+		<wicket:container wicket:id="output" id="output"></wicket:container>
+	</p> -->
+	<div style="padding-left: 40px">
+		<wicket:container wicket:id="theContainer">
+			<div style="padding: 30px">
+				<label wicket:id="label1" id="label1"></label> 
+				<label wicket:id="label2" id="label2"></label> 
+				
+				<div style="padding-top: 20px">
+					<span wicket:id="winnerPly1" id="winnerPly1"></span> 
+					<span wicket:id="winnerPly2" id="winnerPly2"></span>
+				</div>
+
+			</div>
+
+			<div id="bd" style="display: table;">
+
+				<table>
+					<tr>
+						<th>Pit Number</th>
+						<th>Stones</th>
+
+					</tr>
+					<tr wicket:id="rows">
+						<td wicket:id="dataRow"></td>
+					</tr>
+				</table>
+
+
+
+			</div>
+			<form wicket:id="form2" style="padding-top: 30px">
+				<input type="submit" wicket:id="stopGame" value="Stop Game" />
+			</form>
+
+		</wicket:container>
+</div>
+
+
+
+</wicket:panel>
