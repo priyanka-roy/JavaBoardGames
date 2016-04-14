@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public class Pit implements Serializable{
 	/**
-	 * 
+	 * A Pit represents a Pit on the Game Board .
+	 * Each Pit is different with a unique Pit No and the number of stones.
 	 */
 	private static final long serialVersionUID = 7522478816679185109L;
 	private int pitNumber;

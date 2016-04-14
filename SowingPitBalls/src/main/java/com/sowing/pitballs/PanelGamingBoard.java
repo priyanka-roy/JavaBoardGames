@@ -30,7 +30,6 @@ public class PanelGamingBoard extends Panel {
 	private Label winnerPly1;
 	private Label winnerPly2;
 	private int currentPlayer = 1;
-	// method loadPersons is defined elsewhere
 	private List<Pit> pits;
 	private ListDataProvider<Pit> listDataProvider;
 	private DataView<Pit> dataView;
@@ -41,14 +40,17 @@ public class PanelGamingBoard extends Panel {
 	public PanelGamingBoard(String id) {
 		super(id);
 		gameBoard = new GameBoard();
-		Label label = new Label("label", "Capture Pits And Balls  ");
+		Label label = new Label("label", "Capture Pits and the Stones Inside it  ");
 		add(label);
 
 
 		pits = gameBoard.getBoardPits();
 		listDataProvider = new ListDataProvider<Pit>(pits);
 		theContainer = new WebMarkupContainer("theContainer");
-		
+		//the follwings bunch of labels are needed to display which player comes next 
+		//and what number he should input,since I have not added validation
+		//I expect the player would follow the instructions on the web page,saying that
+		//player 1 should input values from 0 to 5 and Player 2 from 7-12
 		label1 = new Label("label1", "Player One Active   Enter A VALID NUMBER BETWEEN  0-5 ");
 		label1.setVisible(false);
 		label2 = new Label("label2", "Player Two Active   Enter A VALID NUMBER BETWEEN 7-12");
@@ -60,12 +62,12 @@ public class PanelGamingBoard extends Panel {
 		
 		// TODO-its disabled for now
 		stopGame();
-
+		//receives the player's input
 		final TextField<String> inputPlayer = new TextField<String>("inputPlayer",new PropertyModel<String>(gameBoard, "pitNo"));
 		inputPlayer.setOutputMarkupId(true);
 		Form<?> form = startGame(inputPlayer);
 		add(form);
-		updateBoard();
+		repaintGameBoardWithNewValues();
 		this.setOutputMarkupId(true);
 	}
 
@@ -79,7 +81,7 @@ public class PanelGamingBoard extends Panel {
 				super.onAfterSubmit(target, form);
 				if (target != null) {
 					String textPosition = form.getRequest().getRequestParameters().getParameterValue("inputPlayer").toString();
-					
+					//the heart beat of the application is this method.
 					gameBoard.moveAndPlay(getCurrentPlayer(), Integer.parseInt(textPosition));
 					checkCurrentPlayer();
 					target.add(theContainer);
@@ -93,7 +95,9 @@ public class PanelGamingBoard extends Panel {
 		return form;
 	}
 
-	
+	/**
+	 * Checks who is the next player by a call to the backend 
+	 */
 	private void checkCurrentPlayer() {
 		if (gameBoard.getNextPlayer() == 1) {
 			setCurrentPlayer(1);
@@ -112,7 +116,11 @@ public class PanelGamingBoard extends Panel {
 	}
 	
 	
-
+	/**
+	 * Simply Displays the winner by making a call to the backend
+	 * which is reponsible to determine the winner and set it to 1 or 2
+	 * depending on the player who wins.
+	 */
 	private void displayWinner() {
 		gameBoard.calculateScore();
 		if (gameBoard.getWinner() == 1 || gameBoard.getWinner() == 2) {
@@ -133,7 +141,7 @@ public class PanelGamingBoard extends Panel {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void updateBoard() {
+	public void repaintGameBoardWithNewValues() {
 
 		dataView = new DataView<Pit>("rows", listDataProvider) {
 
@@ -151,11 +159,10 @@ public class PanelGamingBoard extends Panel {
 		// encapsulate the ListView in a WebMarkupContainer in order for it to
 		// update
 		theContainer = new WebMarkupContainer("theContainer");
-		// generate a markup-id so the contents can be updated through an AJAX
-		// call
+		// generate a markup-id so the contents can be updated through an AJAX call
 		theContainer.setOutputMarkupId(true);
 		theContainer.add(new AjaxSelfUpdatingTimerBehavior(Duration.seconds(5)));
-		// add all the components that need to be updated via ajax call.
+		// add all the components that needs to be updated via ajax call.
 		theContainer.add(label1);
 		theContainer.add(label2);
 		theContainer.add(winnerPly1);

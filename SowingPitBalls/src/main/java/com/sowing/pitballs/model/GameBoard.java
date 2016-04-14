@@ -14,7 +14,7 @@ public class GameBoard implements Serializable {
 	public static final int BOARD_LENGTH = 14;
 	public static final int PLAYER_0NE_BIG_PIT = 6;
 	public static final int PLAYER_TWO_BIG_PIT = 13;
-	public static final int STONES_IN_PIT = 6;
+	public static final int STONES_IN_PIT =3 ;
 	private int nextPlayer;
 	private int pitNo;
 	private int counterScorePlayer1 = 0;
@@ -37,7 +37,13 @@ public class GameBoard implements Serializable {
 	}
 
 	
-
+/**
+ * Responsible for moving to the next pit depending on the numeber
+ * of stones that was chosen by the Player.
+ * Also responsible for determining who the next player would be.
+ * @param currentPlayer
+ * @param position
+ */
 	public void moveAndPlay(int currentPlayer, int position) {
 
 		int turn = boardPits.get(position).getStones();
@@ -79,7 +85,13 @@ public class GameBoard implements Serializable {
 		}
 	}
 
-	// checkEmpty for empty pits.
+	/**
+	 * Checks for empty pits and then increments the counter 
+	 * for each player which is later needed to calculate the score
+	 * If the counter for each player reaches 6,it returns true since it means
+	 * that all the pits contains 0 stones in it.
+	 * @return
+	 */
 	public boolean checkEmptyPits() {
 		counterScorePlayer1 = 0;
 		counterScorePlayer2 = 0;
@@ -103,7 +115,10 @@ public class GameBoard implements Serializable {
 	}
 
 	
-	// Calculate Score for Winner
+	/** Calculate Score for Winner
+	 * Score is calculated by first checking for the empty pits 
+	 * and then the stones in each players Big Pit
+	 */
 	public void calculateScore() {
 
 	if (checkEmptyPits()) {
@@ -141,7 +156,7 @@ public class GameBoard implements Serializable {
 		return position;
 	}
 
-	////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////Getters and Setters////////////////////////////////////////////////////////////
 	public List<Pit> getBoardPits() {
 		return boardPits;
 	}

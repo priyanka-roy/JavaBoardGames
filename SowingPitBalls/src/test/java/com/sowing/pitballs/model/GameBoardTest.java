@@ -32,8 +32,9 @@ public class GameBoardTest extends TestCase {
 		gameBoard.getBoardPits().get(gameBoard.PLAYER_TWO_BIG_PIT).setStones(5);
 
 		if (!gameBoard.checkEmptyPits()) {
-			gameBoard.setCounterScorePlayer1(6);
-			gameBoard.setCounterScorePlayer2(6);
+			for(int i = 0;i<6;i++){
+				gameBoard.getBoardPits().get(i).setStones(0);
+			}
 			gameBoard.calculateScore();
 			// player 1 is winner
 			assertEquals(1, gameBoard.getWinner());
@@ -45,10 +46,13 @@ public class GameBoardTest extends TestCase {
 	public void testCheckEmptyPits() {
 		assertNotNull(gameBoard);
 		// when all pits are not empty
-		assertEquals(false, gameBoard.checkEmptyPits());
-		// for player 1 all pits are set to empty
-		gameBoard.setCounterScorePlayer1(6);
-		assertEquals(true, gameBoard.checkEmptyPits());
+		assertFalse(gameBoard.checkEmptyPits());
+		// for player 1 set all pits  to empty
+		for(int i = 0;i<6;i++){
+			gameBoard.getBoardPits().get(i).setStones(0);
+		}
+		
+		assertTrue(gameBoard.checkEmptyPits());
 
 	}
 
