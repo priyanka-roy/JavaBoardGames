@@ -103,12 +103,12 @@ public class PanelGamingBoard extends Panel {
 	 * Checks who is the next player by a call to the backend 
 	 */
 	private void checkCurrentPlayer() {
-		if (gameBoard.getNextPlayer().equals(gameBoard.getPlayers()[0])) {
+		if (gameBoard.getNextPlayer().getPlayerNo() == 1) {
 			setCurrentPlayer(gameBoard.getNextPlayer());
 			label1.setVisible(true);
 			label2.setVisible(false);
 
-		} else if (gameBoard.getNextPlayer().equals(gameBoard.getPlayers()[1])) {
+		} else if (gameBoard.getNextPlayer().getPlayerNo() == 2) {
 			setCurrentPlayer(gameBoard.getNextPlayer());
 			label1.setVisible(false);
 			label2.setVisible(true);
@@ -127,9 +127,9 @@ public class PanelGamingBoard extends Panel {
 	 */
 	private void displayWinner() {
 		gameBoard.calculateScore();
-		if (gameBoard.getWinner().equals(gameBoard.getPlayers()[0]) || gameBoard.getWinner().equals(gameBoard.getPlayers()[1])) {
-			Player player = gameBoard.getWinner();
-			if (player.equals(gameBoard.getPlayers()[0])) {
+		if (gameBoard.getWinner() == 1 || gameBoard.getWinner() == 2) {
+			int player = gameBoard.getWinner();
+			if (player == 1) {
 				winnerPly1.setVisible(true);
 				winnerPly2.setVisible(false);
 				label1.setVisible(false);

@@ -18,12 +18,12 @@ public class GameBoard implements Serializable {
 	public static final int BOARD_LENGTH = 14;
 	public static final int PLAYER_0NE_BIG_PIT = 6;
 	public static final int PLAYER_TWO_BIG_PIT = 13;
-	public static final int STONES_IN_PIT = 3;
+	public static final int STONES_IN_PIT = 6;
 	private Player nextPlayer;
 	private int pitNo;
 	private int counterScorePlayer1 = 0;
 	private int counterScorePlayer2 = 0;
-	private Player winner = new Player(0,"dummy");//***
+	private int winner;
 	private boolean terminate;
 	private Player[] players = new Player[2];
 	
@@ -42,7 +42,6 @@ public class GameBoard implements Serializable {
 		terminate = false;
 		players[0] = new Player(1, "Bob");
 		players[1]= new Player(2, "Sam");
-		
 	
 
 	}
@@ -64,10 +63,10 @@ public class GameBoard implements Serializable {
 		while (turn > 0) {
 			position = nextPosition(position);
 			int value = boardPits.get(position).getStones();
-			if (currentPlayer.equals(players[0]) && position == PLAYER_TWO_BIG_PIT) {//todo
+			if (currentPlayer.getPlayerNo() == 1 && position == PLAYER_TWO_BIG_PIT) {
 
 				continue;
-			} else if (currentPlayer.equals(players[1]) && position == PLAYER_0NE_BIG_PIT) {//todo
+			} else if (currentPlayer.getPlayerNo() == 2 && position == PLAYER_0NE_BIG_PIT) {
 
 				continue;
 			} else {
@@ -98,7 +97,7 @@ public class GameBoard implements Serializable {
 			setNextPlayer(players[0]);
 		} else if (position == PLAYER_TWO_BIG_PIT) {
 			setNextPlayer(players[1]);
-		} else if (currentPlayer.equals(players[0])) {//todo
+		} else if (currentPlayer.getPlayerNo() == 1) {
 			setNextPlayer(players[1]);
 		} else {
 			setNextPlayer(players[0]);
@@ -146,9 +145,9 @@ public class GameBoard implements Serializable {
 
 		if (checkEmptyPits()) {
 			if (boardPits.get(PLAYER_0NE_BIG_PIT).getStones() > boardPits.get(PLAYER_TWO_BIG_PIT).getStones()) {
-				setWinner(players[0]);//**
+				setWinner(1);
 			} else {
-				setWinner(players[1]);//***
+				setWinner(2);
 			}
 
 		}
@@ -205,10 +204,10 @@ public class GameBoard implements Serializable {
 		this.pitNo = pitNo;
 	}
 
-	public Player getWinner() {
-		return winner;//****
+	public int getWinner() {
+		return winner;
 	}
-	public void setWinner(Player winner) {//***
+	public void setWinner(int winner) {
 		this.winner = winner;
 	}
 	public boolean isTerminate() {
